@@ -12,19 +12,43 @@ public class ZeroACem {
 		Scanner entrada = new Scanner(System.in);
 		
 		int numeroAleatorio = random.nextInt(100);
+		int limiteCima = 100;
+		int limiteBaixo = 0;
+		int tentativas = 0;
 		
-		System.out.println("Número aleatório: " + numeroAleatorio); //temporariamente, para testar a lógica do programa.
-		List<Tentativas> lista = new ArrayList<>();
+		System.out.println("NÃºmero aleatÃ³rio: " + numeroAleatorio); //temporariamente, para testar a lÃ³gica do programa.
+		List<Tentativas> listaTentativa = new ArrayList<>();
 		
 		System.out.println("--------------------------------------------------------------");
-		System.out.println("Zero a Cem - Drinking Games!");
-		System.out.println("Você tem 10 tentativas para acertar um número entre 0 e 100.");
+		System.out.println("P9 - Drinking Games!");
+		System.out.println("Zero A Cem - VocÃª tem 05 tentativas para acertar um nÃºmero entre 0 e 100.");
 		System.out.println("--------------------------------------------------------------\n");
+		System.out.println("VALENDO!");
 		
-		System.out.print("Primeira tentativa: ");
-		lista.add(new Tentativas(entrada.nextInt()));
-		System.out.println(lista.get(0).toInt()); //verificando se a função para transformar em int e mostrar referência do index funciona.
-		
+		for(int i = 0; i < 5; i++) {
+			System.out.println("EstÃ¡ entre: " + limiteBaixo + " e " + limiteCima);
+			System.out.print((i+1) + " tentativa: ");
+			listaTentativa.add(new Tentativas(entrada.nextInt()));
+			if (listaTentativa.get(i).toInt() >= limiteCima || listaTentativa.get(i).toInt() <= limiteBaixo) {
+				System.out.println("Escolha um nÃºmero ENTRE " + limiteBaixo + " e " + limiteCima + "!");
+				System.out.println("Perdeu a rodada, BEBE!");
+			}
+			if (listaTentativa.get(i).toInt() > numeroAleatorio && listaTentativa.get(i).toInt() < limiteCima) {
+				limiteCima = listaTentativa.get(i).toInt();
+			} else if(listaTentativa.get(i).toInt() < numeroAleatorio && listaTentativa.get(i).toInt() > limiteBaixo) {
+				limiteBaixo = listaTentativa.get(i).toInt();
+			}
+			if (listaTentativa.get(i).toInt() == numeroAleatorio) {
+				System.out.println("VocÃª acertou!! BEBE DESGRAÃ‡A!!");
+				break;
+			}
+			
+			tentativas = i + 1;
+		}
+
+		if (listaTentativa.get(tentativas).toInt() != numeroAleatorio) {
+			System.out.println("NinguÃ©m acertou, TODOS BEBEM!");
+		}
 		
 		entrada.close();
 	}
